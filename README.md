@@ -5,7 +5,7 @@ Homebrew tap for [Jot](https://jot.ideaflow.page/) — free, open-source, on-dev
 ## Install
 
 ```
-brew install --cask vineetu/jot/jot
+brew install --cask vineetu/jot/mac
 ```
 
 Requires Apple Silicon and macOS Sonoma 14.0+. The app auto-updates via Sparkle after install.
