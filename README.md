@@ -1,6 +1,6 @@
 # homebrew-jot
 
-Homebrew tap for [Jot](https://jot.ideaflow.page/) — free, open-source, on-device dictation for macOS.
+Homebrew tap for [Jot](https://jot-transcribe.com/) — free, open-source, on-device dictation for macOS.
 
 ## Install
 
