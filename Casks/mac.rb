@@ -24,9 +24,9 @@ cask "mac" do
   depends_on arch: :arm64
   # Raised from :sonoma — the deployment floor moved to macOS 15 when the app
   # adopted CoreMLLLM for on-device search, so a Sonoma install would fail to
-  # launch. `>=` rather than a bare symbol: a bare `:sequoia` pins to exactly
-  # that release and would lock out everyone on anything newer.
-  depends_on macos: ">= :sequoia"
+  # launch. The bare symbol IS the minimum-version form; the `">= :sequoia"`
+  # string spelling is deprecated and warns on every brew command.
+  depends_on macos: :sequoia
 
   app "Jot.app"
   # The CLI already ships inside the bundle (Contents/Helpers/jot) — this only
