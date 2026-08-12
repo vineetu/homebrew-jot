@@ -29,12 +29,25 @@ cask "mac" do
   depends_on macos: :sequoia
 
   app "Jot.app"
-  # The CLI already ships inside the bundle (Contents/Helpers/jot) — this only
-  # puts it on PATH. Installed as `jot-cli`, NOT `jot`: macOS has its own
+
+  # The CLI already ships inside the bundle (Contents/Helpers/jot); this only
+  # puts it on PATH, as `jot-cli` rather than `jot` — macOS has its own
   # /usr/bin/jot (the BSD sequential-data utility) and homebrew-core has an
-  # unrelated `jot` formula, so that name would shadow one and collide with
-  # the other.
-  binary "#{appdir}/Jot.app/Contents/Helpers/jot", target: "jot-cli"
+  # unrelated `jot` formula.
+  #
+  # Deliberately NOT `binary … target: "jot-cli"`. Homebrew implements that
+  # rename by writing a `kMDItemAlternateNames` xattr onto the SOURCE file, and
+  # macOS App Management refuses writes inside another app's signed bundle
+  # ("xattr: Operation not permitted"), which aborts the entire install. A
+  # plain symlink needs no write to the bundle at all.
+  postflight do
+    FileUtils.ln_sf "#{appdir}/Jot.app/Contents/Helpers/jot",
+                    "#{HOMEBREW_PREFIX}/bin/jot-cli"
+  end
+
+  uninstall_postflight do
+    FileUtils.rm_f "#{HOMEBREW_PREFIX}/bin/jot-cli"
+  end
 
   zap trash: [
     "~/Library/Application Support/Jot",
